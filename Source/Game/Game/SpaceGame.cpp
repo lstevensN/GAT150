@@ -62,7 +62,7 @@ void SpaceGame::Update(float dt)
 		m_scene->RemoveAll();
 		{
 			// Create the player
-			std::unique_ptr<Player> player = std::make_unique<Player>(15.0f, kiko::Pi, kiko::Transform{ { 400, 300 }, 0, 4.0f }, kiko::g_manager.Get("ship.txt"));
+			std::unique_ptr<Player> player = std::make_unique<Player>(15.0f, kiko::Pi, kiko::Transform{ { 400, 300 }, 0, 4.0f }, kiko::g_manager.Get("shipz.txt"));
 			player->m_tag = "Player";
 			player->m_game = this;
 			player->SetDamping(0.95f);

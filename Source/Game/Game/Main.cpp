@@ -3,6 +3,7 @@
 #include "Renderer/ModelManager.h"
 #include "Renderer/ParticleSystem.h"
 #include "Renderer/Text.h"
+#include "Renderer/Texture.h"
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
 #include "Framework/Scene.h"
@@ -14,6 +15,7 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <cassert>
 
 
 using vec2 = kiko::Vector2;
@@ -43,6 +45,11 @@ public:
 
 int main(int argc, char* argv[])
 {
+	int* j = nullptr;
+	//ASSERT_LOG(j == nullptr, "pointer is null");
+
+	INFO_LOG("hello world");
+
 	kiko::MemoryTracker::Initialize();
 	kiko::seedRandom((unsigned int)time(nullptr));
 	kiko::setFilePath("assets");
@@ -77,6 +84,9 @@ int main(int argc, char* argv[])
 	float speed = 50;
 	float turnRate = kiko::DegreesToRadians(180);
 
+	std::shared_ptr<kiko::Texture> texture = std::make_shared<kiko::Texture>();
+	texture->Create(kiko::g_renderer, "bagel.png");
+
 	// main game loop
 	bool quit = false;
 	while (!quit)
@@ -109,6 +119,7 @@ int main(int argc, char* argv[])
 		}
 
 		game->Draw(kiko::g_renderer);
+		kiko::g_renderer.DrawTexture(texture.get(), 200.0f, 200.0f, 0.0f);
 
 		kiko::g_renderer.EndFrame();
 	}
