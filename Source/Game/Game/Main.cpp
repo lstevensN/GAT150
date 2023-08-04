@@ -16,6 +16,7 @@
 #include <vector>
 #include <thread>
 #include <cassert>
+#include <map>
 
 
 using vec2 = kiko::Vector2;
@@ -43,10 +44,55 @@ public:
 	vec2 m_vel;
 };
 
+void print(int count, ...)
+{
+	va_list args;
+
+	va_start(args, count);
+	for (int i = 0; i < count; ++i)
+	{
+		std::cout << va_arg(args, const char*) << std::endl;
+	}
+	va_end(args);
+}
+
+//template <typename T>
+//void print(const std::string& s, const T& container)
+//{
+//	std::cout << s << std::endl;
+//		for (auto element : container)
+//		{
+//			std::cout << element << " ";
+//		}
+//	std::cout << std::endl;
+//}
+
 int main(int argc, char* argv[])
 {
-	int* j = nullptr;
-	//ASSERT_LOG(j == nullptr, "pointer is null");
+	/*int n[4] = { 1, 2, 3, 4 };
+	print("array: ", n);
+	std::cout << n << std::endl;
+	std::cout << *(n + 1) << std::endl;
+
+	std::array<int, 4> na = { 1, 2, 3, 4 };
+	print("array class: ", na);
+	std::cout << na.front() << std::endl;
+
+	std::vector<int> nv = { 1, 2, 3, 4 };
+	auto iter = nv.erase(nv.begin(), nv.end());
+	print("vector: ", nv);
+
+	std::list<int> nl = { 1, 2, 3, 4 };
+	print("list:", nl);
+	nl.push_front(0);
+	print("list", nl);
+
+	std::map<std::string, int> ages;
+	ages["charles"] = 17;
+	ages["xane"] = 18;
+	ages["jacob"] = 19;*/
+
+	/*std::cout << ages["charles"] << std::endl;*/
 
 	INFO_LOG("hello world");
 
@@ -85,7 +131,7 @@ int main(int argc, char* argv[])
 	float turnRate = kiko::DegreesToRadians(180);
 
 	std::shared_ptr<kiko::Texture> texture = std::make_shared<kiko::Texture>();
-	texture->Create(kiko::g_renderer, "bagel.png");
+	texture->Load("bagel.png", kiko::g_renderer);
 
 	// main game loop
 	bool quit = false;
