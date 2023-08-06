@@ -26,7 +26,7 @@ namespace kiko
 		}
 
 		res_t<T> resource = std::make_shared<T>();
-		resource->Create(filename, args);
+		resource->Create(filename, args ...);
 		m_resources[filename] = resource;
 
 		return resource;

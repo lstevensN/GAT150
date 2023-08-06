@@ -7,6 +7,7 @@
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
 #include "Framework/Scene.h"
+#include "Framework/Resource/ResourceManager.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -44,56 +45,8 @@ public:
 	vec2 m_vel;
 };
 
-void print(int count, ...)
-{
-	va_list args;
-
-	va_start(args, count);
-	for (int i = 0; i < count; ++i)
-	{
-		std::cout << va_arg(args, const char*) << std::endl;
-	}
-	va_end(args);
-}
-
-//template <typename T>
-//void print(const std::string& s, const T& container)
-//{
-//	std::cout << s << std::endl;
-//		for (auto element : container)
-//		{
-//			std::cout << element << " ";
-//		}
-//	std::cout << std::endl;
-//}
-
 int main(int argc, char* argv[])
 {
-	/*int n[4] = { 1, 2, 3, 4 };
-	print("array: ", n);
-	std::cout << n << std::endl;
-	std::cout << *(n + 1) << std::endl;
-
-	std::array<int, 4> na = { 1, 2, 3, 4 };
-	print("array class: ", na);
-	std::cout << na.front() << std::endl;
-
-	std::vector<int> nv = { 1, 2, 3, 4 };
-	auto iter = nv.erase(nv.begin(), nv.end());
-	print("vector: ", nv);
-
-	std::list<int> nl = { 1, 2, 3, 4 };
-	print("list:", nl);
-	nl.push_front(0);
-	print("list", nl);
-
-	std::map<std::string, int> ages;
-	ages["charles"] = 17;
-	ages["xane"] = 18;
-	ages["jacob"] = 19;*/
-
-	/*std::cout << ages["charles"] << std::endl;*/
-
 	INFO_LOG("hello world");
 
 	kiko::MemoryTracker::Initialize();
@@ -108,6 +61,8 @@ int main(int argc, char* argv[])
 
 	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
 	game->Initialize();
+
+	kiko::res_t<kiko::Texture> texture = kiko::g_resources.Get<kiko::Texture>("bagel.png", kiko::g_renderer);
 
 	std::vector<vec2> cursor{ {10, 10}, { -10, 10 }, { -10, -10 }, { 10, -10 }, { 10, 10 } };
 	kiko::Model cursorModel{cursor};
@@ -129,9 +84,6 @@ int main(int argc, char* argv[])
 	kiko::vec2 position{ 400, 300 };
 	float speed = 50;
 	float turnRate = kiko::DegreesToRadians(180);
-
-	std::shared_ptr<kiko::Texture> texture = std::make_shared<kiko::Texture>();
-	texture->Load("bagel.png", kiko::g_renderer);
 
 	// main game loop
 	bool quit = false;

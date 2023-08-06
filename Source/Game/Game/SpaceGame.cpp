@@ -3,19 +3,16 @@
 bool SpaceGame::Initialize()
 {
 	// Create font / text objects 
-	m_font = std::make_shared<kiko::Font>("data-latin.ttf", 24);
-	m_scoreText = std::make_unique<kiko::Text>(m_font);
+	m_scoreText = std::make_unique<kiko::Text>(kiko::g_resources.Get<kiko::Font>("data-latin.ttf", 24));
 	m_scoreText->Create(kiko::g_renderer, "SCORE 0000", kiko::Color{ 1, 0, 1, 1 });
 
-	m_gameOverText = std::make_unique<kiko::Text>(m_font);
+	m_gameOverText = std::make_unique<kiko::Text>(kiko::g_resources.Get<kiko::Font>("data-latin.ttf", 24));
 	m_gameOverText->Create(kiko::g_renderer, "GAME OVER", kiko::Color{ 1, 1, 1, 1 });
 
-	m_font = std::make_shared<kiko::Font>("data-latin.ttf", 36);
-	m_titleText = std::make_unique<kiko::Text>(m_font);
+	m_titleText = std::make_unique<kiko::Text>(kiko::g_resources.Get<kiko::Font>("data-latin.ttf", 36));
 	m_titleText->Create(kiko::g_renderer, "SHIPPING FUEL", kiko::Color{ 1, 1, 1, 1 });
 
-	m_font = std::make_shared<kiko::Font>("data-unifon.ttf", 36);
-	m_livesText = std::make_unique<kiko::Text>(m_font);
+	m_livesText = std::make_unique<kiko::Text>(kiko::g_resources.Get<kiko::Font>("data-unifon.ttf", 36));
 	m_livesText->Create(kiko::g_renderer, "A ", kiko::Color{ 1, 1, 1, 1 });
 
 	// Load audio
@@ -62,10 +59,16 @@ void SpaceGame::Update(float dt)
 		m_scene->RemoveAll();
 		{
 			// Create the player
-			std::unique_ptr<Player> player = std::make_unique<Player>(15.0f, kiko::Pi, kiko::Transform{ { 400, 300 }, 0, 4.0f }, kiko::g_manager.Get("shipz.txt"));
+			std::unique_ptr<Player> player = std::make_unique<Player>(15.0f, kiko::Pi, kiko::Transform{ { 400, 300 }, 0, 4.0f }, kiko::g_manager.Get("ship.txt"));
 			player->m_tag = "Player";
 			player->m_game = this;
 			player->SetDamping(0.95f);
+
+			// create components
+			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
+			component->m_texture = kiko::g_resources.Get<kiko::Texture>("red_ball.png", kiko::g_renderer);
+			player->AddComponent(std::move(component));
+
 			m_scene->Add(std::move(player));
 		}
 
@@ -84,6 +87,11 @@ void SpaceGame::Update(float dt)
 			enemy->m_tag = "Enemy";
 			enemy->m_game = this;
 			m_scene->Add(std::move(enemy));
+
+			// create components
+			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
+			component->m_texture = kiko::g_resources.Get<kiko::Texture>("leaCheese.png", kiko::g_renderer);
+			enemy->AddComponent(std::move(component));
 		}
 
 		if (m_fastSpawnTimer >= m_spawnTime)

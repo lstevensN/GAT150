@@ -1,10 +1,11 @@
 #pragma once
 #include "Core/Core.h"
 #include "Renderer/Model.h"
-#include "Framework/Scene.h"
+#include "Scene.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/ModelManager.h"
 #include "Audio/AudioSystem.h"
+#include "Components/Component.h"
 #include <memory>
 
 namespace kiko
@@ -24,6 +25,8 @@ namespace kiko
 		virtual void Update(float dt);
 		virtual void Draw(kiko::Renderer& renderer);
 
+		void AddComponent(std::unique_ptr<Component> component);
+
 		inline float GetRadius() { return (m_model) ? m_model->GetRadius() * m_transform.scale : -10000; }
 		virtual void OnCollision(Actor* other) {}
 
@@ -35,11 +38,15 @@ namespace kiko
 
 		friend class Game;
 		class Game* m_game = nullptr;
+		
+		friend class Component;
 
 		kiko::Transform m_transform;
 		std::string m_tag;
 
 	protected:
+		std::vector<std::unique_ptr<Component>> m_components;
+
 		bool m_destroyed = false;
 		float m_lifespan = -10.0f;
 		std::shared_ptr<Model> m_model;

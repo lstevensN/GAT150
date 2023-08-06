@@ -3,6 +3,11 @@
 
 namespace kiko
 {
+	bool Model::Create(std::string filename, ...)
+	{
+		return Load(filename);
+	}
+
 	bool Model::Load(const std::string& filename)
 	{
 		std::string buffer;

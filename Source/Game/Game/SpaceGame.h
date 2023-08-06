@@ -6,6 +6,8 @@
 
 #include "Framework/Scene.h"
 #include "Framework/Emitter.h"
+#include "Framework/Resource/ResourceManager.h"
+#include "Framework/Components/SpriteComponent.h"
 
 #include "Audio/AudioSystem.h"
 #include "Input/InputSystem.h"
