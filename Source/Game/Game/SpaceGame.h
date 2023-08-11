@@ -1,20 +1,14 @@
 #pragma once
-#include "Framework/Game.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Weapon.h"
 
-#include "Framework/Scene.h"
-#include "Framework/Emitter.h"
-#include "Framework/Resource/ResourceManager.h"
-#include "Framework/Components/SpriteComponent.h"
+#include "Framework/Framework.h"
+#include "Renderer/Renderer.h"
 
 #include "Audio/AudioSystem.h"
 #include "Input/InputSystem.h"
-#include "Renderer/Renderer.h"
-#include "Renderer/Text.h"
-#include "Renderer/ModelManager.h"
-#include "Renderer/ParticleSystem.h"
+
 
 class SpaceGame : public kiko::Game
 {

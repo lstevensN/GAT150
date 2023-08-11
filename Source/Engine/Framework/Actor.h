@@ -1,16 +1,15 @@
 #pragma once
+#include "Object.h"
 #include "Core/Core.h"
-#include "Renderer/Model.h"
 #include "Scene.h"
 #include "Renderer/Renderer.h"
-#include "Renderer/ModelManager.h"
 #include "Audio/AudioSystem.h"
 #include "Components/Component.h"
 #include <memory>
 
 namespace kiko
 {
-	class Actor
+	class Actor : public Object
 	{
 	public:
 		Actor() = default;
@@ -22,10 +21,15 @@ namespace kiko
 			m_transform{ transform }
 		{}
 
+		virtual bool Initialize() override;
+		virtual void OnDestroy() override;
+
 		virtual void Update(float dt);
 		virtual void Draw(kiko::Renderer& renderer);
 
 		void AddComponent(std::unique_ptr<Component> component);
+		template <typename T>
+		T* GetComponent();
 
 		inline float GetRadius() { return (m_model) ? m_model->GetRadius() * m_transform.scale : -10000; }
 		virtual void OnCollision(Actor* other) {}
@@ -54,4 +58,16 @@ namespace kiko
 		vec2 m_velocity;
 		float m_damping = 0;
 	};
+
+	template<typename T>
+	inline T* Actor::GetComponent()
+	{
+		for (auto& component : m_components)
+		{
+			T* result = dynamic_cast<T*>(component.get());
+			if (result) return result;
+		}
+
+		return nullptr;
+	}
 }

@@ -1,5 +1,14 @@
 #include "Player.h"
 
+bool Player::Initialize()
+{
+	Actor::Initialize();
+
+	m_physicsComponent = GetComponent<kiko::PhysicsComponent>();
+
+	return true;
+}
+
 void Player::Update(float dt)
 {
 	Actor::Update(dt);
@@ -14,7 +23,8 @@ void Player::Update(float dt)
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_W)) thrust = 1;
 
 	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(m_transform.rotation);
-	AddForce(forward * m_speed * thrust);
+
+	m_physicsComponent->ApplyForce(forward * m_speed * thrust);
 
 	m_transform.position += forward * m_speed * thrust * dt;
 	m_transform.position.x = kiko::Wrap(m_transform.position.x, (float)kiko::g_renderer.GetWidth());
@@ -25,7 +35,7 @@ void Player::Update(float dt)
 	else
 	{
 		m_shieldOn = false;
-		m_model = kiko::g_manager.Get("ship.txt");
+		//m_model = kiko::g_manager.Get("ship.txt");
 		m_powerUpTimer = 0;
 		m_speed = 15.0f;
 	}
@@ -40,18 +50,33 @@ void Player::Update(float dt)
 		if (m_smallWeapon)
 		{
 			kiko::Transform transform1{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(25), 0.5 };
-			std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(500.0f, transform1, kiko::g_manager.Get("weapon_small.txt"));
+			std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(500.0f, transform1);
 			weapon->m_tag = "p_smallBullet";
+
+			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
+			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
+			weapon->AddComponent(std::move(component));
+
 			m_scene->Add(std::move(weapon));
 
 			kiko::Transform transform2{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(0), 0.5 };
-			weapon = std::make_unique<Weapon>(500.0f, transform2, kiko::g_manager.Get("weapon_small.txt"));
+			weapon = std::make_unique<Weapon>(500.0f, transform2);
 			weapon->m_tag = "p_smallBullet";
+
+			component = std::make_unique<kiko::SpriteComponent>();
+			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
+			weapon->AddComponent(std::move(component));
+
 			m_scene->Add(std::move(weapon));
 
 			kiko::Transform transform3{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(-25), 0.5 };
-			weapon = std::make_unique<Weapon>(500.0f, transform3, kiko::g_manager.Get("weapon_small.txt"));
+			weapon = std::make_unique<Weapon>(500.0f, transform3);
 			weapon->m_tag = "p_smallBullet";
+
+			component = std::make_unique<kiko::SpriteComponent>();
+			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
+			weapon->AddComponent(std::move(component));
+
 			m_scene->Add(std::move(weapon));
 
 			kiko::g_audioSystem.PlayOneShot("weapon_small", false);
@@ -59,12 +84,12 @@ void Player::Update(float dt)
 		else
 		{
 			kiko::Transform transform1{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(10), 1 };
-			std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(350.0f, transform1, kiko::g_manager.Get("weapon_big.txt"));
+			std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(350.0f, transform1);
 			weapon->m_tag = "p_Bullet";
 			m_scene->Add(std::move(weapon));
 
 			kiko::Transform transform3{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(-10), 1 };
-			weapon = std::make_unique<Weapon>(350.0f, transform3, kiko::g_manager.Get("weapon_big.txt"));
+			weapon = std::make_unique<Weapon>(350.0f, transform3);
 			weapon->m_tag = "p_Bullet";
 			m_scene->Add(std::move(weapon));
 
@@ -136,7 +161,7 @@ void Player::OnCollision(Actor* other)
 	if (other->m_tag == "power_up")
 	{
 		m_shieldOn = true;
-		m_model = kiko::g_manager.Get("ship_shield.txt");
+		//m_model = kiko::g_manager.Get("ship_shield.txt");
 		m_speed = 20.0f;
 		m_game->AddPoints(500);
 	}

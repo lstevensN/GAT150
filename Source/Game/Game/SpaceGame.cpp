@@ -59,16 +59,21 @@ void SpaceGame::Update(float dt)
 		m_scene->RemoveAll();
 		{
 			// Create the player
-			std::unique_ptr<Player> player = std::make_unique<Player>(15.0f, kiko::Pi, kiko::Transform{ { 400, 300 }, 0, 4.0f }, kiko::g_manager.Get("ship.txt"));
+			std::unique_ptr<Player> player = std::make_unique<Player>(15.0f, kiko::Pi, kiko::Transform{ { 400, 300 }, 0, 1.0f });
 			player->m_tag = "Player";
 			player->m_game = this;
 			player->SetDamping(0.95f);
 
 			// create components
-			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
-			component->m_texture = kiko::g_resources.Get<kiko::Texture>("red_ball.png", kiko::g_renderer);
-			player->AddComponent(std::move(component));
+			auto renderComponent = std::make_unique<kiko::SpriteComponent>();
+			renderComponent->m_texture = kiko::g_resources.Get<kiko::Texture>("leaCheese-remastered.png", kiko::g_renderer);
+			player->AddComponent(std::move(renderComponent));
 
+			auto physicsComponent = std::make_unique<kiko::EnginePhysicsComponent>();
+			physicsComponent->m_damping = 0.9f;
+			player->AddComponent(std::move(physicsComponent));
+
+			player->Initialize();
 			m_scene->Add(std::move(player));
 		}
 
@@ -83,23 +88,29 @@ void SpaceGame::Update(float dt)
 		if (m_spawnTimer >= m_spawnTime)
 		{
 			m_spawnTimer = -3;
-			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(kiko::randomf(30, 125), kiko::Pi, kiko::Transform{ { 0, kiko::random(200, 600) }, kiko::randomf(kiko::TwoPi), kiko::randomf(3.0f, 5.0f)}, kiko::g_manager.Get("enemy.txt"));
+			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(kiko::randomf(30, 125), kiko::Pi, kiko::Transform{ { 0, kiko::random(200, 600) }, kiko::randomf(kiko::TwoPi), kiko::randomf(0.5f, 2.0f)});
 			enemy->m_tag = "Enemy";
 			enemy->m_game = this;
-			m_scene->Add(std::move(enemy));
 
 			// create components
 			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
-			component->m_texture = kiko::g_resources.Get<kiko::Texture>("leaCheese.png", kiko::g_renderer);
+			component->m_texture = kiko::g_resources.Get<kiko::Texture>("leaCheese-remastered.png", kiko::g_renderer);
 			enemy->AddComponent(std::move(component));
+
+			m_scene->Add(std::move(enemy));
 		}
 
 		if (m_fastSpawnTimer >= m_spawnTime)
 		{
 			m_fastSpawnTimer = 0;
-			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(kiko::randomf(100, 225), kiko::Pi, kiko::Transform{ { 0, kiko::random(200, 600) }, kiko::randomf(kiko::TwoPi), kiko::randomf(1.5f, 2.0f)}, kiko::g_manager.Get("enemy_fast.txt"));
+			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(kiko::randomf(100, 225), kiko::Pi, kiko::Transform{ { 0, kiko::random(200, 600) }, kiko::randomf(kiko::TwoPi), kiko::randomf(0.25f, 1.0f)});
 			enemy->m_tag = "fastEnemy";
 			enemy->m_game = this;
+
+			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
+			component->m_texture = kiko::g_resources.Get<kiko::Texture>("leaCheese-remastered.png", kiko::g_renderer);
+			enemy->AddComponent(std::move(component));
+
 			m_scene->Add(std::move(enemy));
 		}
 
@@ -108,7 +119,7 @@ void SpaceGame::Update(float dt)
 		if (m_powerUpTimer >= m_spawnTime)
 		{
 			m_powerUpTimer = -40;
-			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(50.0f, kiko::Pi, kiko::Transform{ { 0, kiko::random(200, 600) }, kiko::randomf(kiko::TwoPi), 5.0f }, kiko::g_manager.Get("power_up.txt"));
+			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(50.0f, kiko::Pi, kiko::Transform{ { 0, kiko::random(200, 600) }, kiko::randomf(kiko::TwoPi), 5.0f });
 			enemy->m_tag = "power_up";
 			enemy->m_game = this;
 			m_scene->Add(std::move(enemy));

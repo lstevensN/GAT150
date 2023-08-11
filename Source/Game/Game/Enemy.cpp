@@ -36,7 +36,7 @@ void Enemy::Update(float dt)
 		if (m_tag == "Enemy")
 		{
 			kiko::Transform transform{ m_transform.position, m_transform.rotation, 1 };
-			std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(350.0f, transform, kiko::g_manager.Get("weapon_strong.txt"));
+			std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(350.0f, transform);
 			weapon->m_tag = "e_Bullet";
 			m_scene->Add(std::move(weapon));
 
@@ -45,7 +45,7 @@ void Enemy::Update(float dt)
 		else if (m_tag == "fastEnemy")
 		{
 			kiko::Transform transform{ m_transform.position, m_transform.rotation, 1 };
-			std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(500.0f, transform, m_model);
+			std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(500.0f, transform);
 			weapon->m_tag = "e_fastBullet";
 			m_scene->Add(std::move(weapon));
 

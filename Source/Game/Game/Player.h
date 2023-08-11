@@ -5,17 +5,21 @@
 #include "Input/InputSystem.h"
 #include "SpaceGame.h"
 #include "Framework/Emitter.h"
+#include "Framework/Components/SpriteComponent.h"
+#include "Framework/Components/Component.h"
+#include "Framework/Components/PhysicsComponent.h"
 
 class Player : public kiko::Actor
 {
 public:
 	Player() = default;
-	Player(float speed, float turnRate, const kiko::Transform& transform, std::shared_ptr<kiko::Model> model) :
-		Actor{ transform, model },
+	Player(float speed, float turnRate, const kiko::Transform& transform) :
+		Actor{ transform },
 		m_speed{ speed },
 		m_turnRate{ turnRate }
 	{}
 
+	bool Initialize() override;
 	void Update(float dt) override;
 	void OnCollision(Actor* other) override;
 
@@ -27,4 +31,6 @@ private:
 
 	bool m_smallWeapon = false;
 	bool m_shieldOn = false;
+
+	kiko::PhysicsComponent* m_physicsComponent = nullptr;
 };

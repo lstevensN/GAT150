@@ -1,13 +1,8 @@
 #include "Core/Core.h"
+#include "Framework/Framework.h"
 #include "Renderer/Renderer.h"
-#include "Renderer/ModelManager.h"
-#include "Renderer/ParticleSystem.h"
-#include "Renderer/Text.h"
-#include "Renderer/Texture.h"
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
-#include "Framework/Scene.h"
-#include "Framework/Resource/ResourceManager.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -47,7 +42,7 @@ public:
 
 int main(int argc, char* argv[])
 {
-	INFO_LOG("hello world");
+	INFO_LOG("Initialze engine...");
 
 	kiko::MemoryTracker::Initialize();
 	kiko::seedRandom((unsigned int)time(nullptr));
@@ -62,7 +57,7 @@ int main(int argc, char* argv[])
 	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
 	game->Initialize();
 
-	kiko::res_t<kiko::Texture> texture = kiko::g_resources.Get<kiko::Texture>("bagel.png", kiko::g_renderer);
+	// kiko::res_t<kiko::Texture> texture = kiko::g_resources.Get<kiko::Texture>("bagel.png", kiko::g_renderer);
 
 	std::vector<vec2> cursor{ {10, 10}, { -10, 10 }, { -10, -10 }, { 10, -10 }, { 10, 10 } };
 	kiko::Model cursorModel{cursor};
@@ -117,7 +112,7 @@ int main(int argc, char* argv[])
 		}
 
 		game->Draw(kiko::g_renderer);
-		kiko::g_renderer.DrawTexture(texture.get(), 200.0f, 200.0f, 0.0f);
+		//kiko::g_renderer.DrawTexture(texture.get(), 200.0f, 200.0f, 0.0f);
 
 		kiko::g_renderer.EndFrame();
 	}
