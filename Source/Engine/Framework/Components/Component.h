@@ -10,7 +10,7 @@ namespace kiko
 
 		friend class Actor;
 
-	protected:
+	public:
 		class Actor* m_owner = nullptr;
 	};
 }

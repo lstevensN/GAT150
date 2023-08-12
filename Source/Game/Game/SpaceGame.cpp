@@ -73,6 +73,10 @@ void SpaceGame::Update(float dt)
 			physicsComponent->m_damping = 0.9f;
 			player->AddComponent(std::move(physicsComponent));
 
+			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+			collisionComponent->m_radius = 30.0f;
+			player->AddComponent(std::move(collisionComponent));
+
 			player->Initialize();
 			m_scene->Add(std::move(player));
 		}
@@ -97,6 +101,11 @@ void SpaceGame::Update(float dt)
 			component->m_texture = kiko::g_resources.Get<kiko::Texture>("leaCheese-remastered.png", kiko::g_renderer);
 			enemy->AddComponent(std::move(component));
 
+			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+			collisionComponent->m_radius = 30.0f;
+			enemy->AddComponent(std::move(collisionComponent));
+
+			enemy->Initialize();
 			m_scene->Add(std::move(enemy));
 		}
 
@@ -111,6 +120,11 @@ void SpaceGame::Update(float dt)
 			component->m_texture = kiko::g_resources.Get<kiko::Texture>("leaCheese-remastered.png", kiko::g_renderer);
 			enemy->AddComponent(std::move(component));
 
+			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+			collisionComponent->m_radius = 30.0f;
+			enemy->AddComponent(std::move(collisionComponent));
+
+			enemy->Initialize();
 			m_scene->Add(std::move(enemy));
 		}
 

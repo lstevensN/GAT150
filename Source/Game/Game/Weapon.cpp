@@ -1,11 +1,28 @@
 #include "Weapon.h"
 
+bool Weapon::Initialize()
+{
+	Actor::Initialize();
+
+	auto collisionComponent = GetComponent<kiko::CollisionComponent>();
+
+	if (collisionComponent)  // null check
+	{
+		auto renderComponent = GetComponent<kiko::RenderComponent>();
+		if (renderComponent)
+		{
+			float scale = m_transform.scale;
+			collisionComponent->m_radius = renderComponent->GetRadius() * scale;
+		}
+	}
+
+	return true;
+}
+
 void Weapon::Update(float dt)
 {
 	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(m_transform.rotation);
 	m_transform.position += forward * m_speed * dt;
-	//m_transform.position.x = kiko::Wrap(m_transform.position.x, (float)kiko::g_renderer.GetWidth());
-	//m_transform.position.y = kiko::Wrap(m_transform.position.y, (float)kiko::g_renderer.GetHeight());
 
 	Actor::Update(dt);
 }

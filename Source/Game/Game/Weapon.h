@@ -15,6 +15,8 @@ public:
 		m_lifespan = 1.5f;
 	}
 
+	bool Initialize() override;
+
 	void Update(float dt) override;
 	void OnCollision(Actor* other) override;
 

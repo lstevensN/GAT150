@@ -5,6 +5,17 @@ bool Player::Initialize()
 	Actor::Initialize();
 
 	m_physicsComponent = GetComponent<kiko::PhysicsComponent>();
+	auto collisionComponent = GetComponent<kiko::CollisionComponent>();
+
+	if (collisionComponent)  // null check
+	{
+		auto renderComponent = GetComponent<kiko::RenderComponent>();
+		if (renderComponent)
+		{
+			float scale = m_transform.scale;
+			collisionComponent->m_radius = renderComponent->GetRadius() * scale;
+		}
+	}
 
 	return true;
 }
@@ -35,7 +46,6 @@ void Player::Update(float dt)
 	else
 	{
 		m_shieldOn = false;
-		//m_model = kiko::g_manager.Get("ship.txt");
 		m_powerUpTimer = 0;
 		m_speed = 15.0f;
 	}
@@ -57,6 +67,11 @@ void Player::Update(float dt)
 			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
 			weapon->AddComponent(std::move(component));
 
+			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+			collisionComponent->m_radius = 30.0f;
+			weapon->AddComponent(std::move(collisionComponent));
+
+			weapon->Initialize();
 			m_scene->Add(std::move(weapon));
 
 			kiko::Transform transform2{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(0), 0.5 };
@@ -67,6 +82,11 @@ void Player::Update(float dt)
 			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
 			weapon->AddComponent(std::move(component));
 
+			collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+			collisionComponent->m_radius = 30.0f;
+			weapon->AddComponent(std::move(collisionComponent));
+
+			weapon->Initialize();
 			m_scene->Add(std::move(weapon));
 
 			kiko::Transform transform3{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(-25), 0.5 };
@@ -77,6 +97,11 @@ void Player::Update(float dt)
 			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
 			weapon->AddComponent(std::move(component));
 
+			collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+			collisionComponent->m_radius = 30.0f;
+			weapon->AddComponent(std::move(collisionComponent));
+
+			weapon->Initialize();
 			m_scene->Add(std::move(weapon));
 
 			kiko::g_audioSystem.PlayOneShot("weapon_small", false);
@@ -86,11 +111,27 @@ void Player::Update(float dt)
 			kiko::Transform transform1{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(10), 1 };
 			std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(350.0f, transform1);
 			weapon->m_tag = "p_Bullet";
+
+			auto component = std::make_unique<kiko::SpriteComponent>();
+			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
+			weapon->AddComponent(std::move(component));
+
+			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+			collisionComponent->m_radius = 30.0f;
+			weapon->AddComponent(std::move(collisionComponent));
+
+			weapon->Initialize();
 			m_scene->Add(std::move(weapon));
 
 			kiko::Transform transform3{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(-10), 1 };
 			weapon = std::make_unique<Weapon>(350.0f, transform3);
 			weapon->m_tag = "p_Bullet";
+
+			collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+			collisionComponent->m_radius = 30.0f;
+			weapon->AddComponent(std::move(collisionComponent));
+
+			weapon->Initialize();
 			m_scene->Add(std::move(weapon));
 
 			kiko::g_audioSystem.PlayOneShot("weapon_big", false);

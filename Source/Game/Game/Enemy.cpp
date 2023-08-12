@@ -1,5 +1,24 @@
 #include "Enemy.h"
 
+bool Enemy::Initialize()
+{
+	Actor::Initialize();
+
+	auto collisionComponent = GetComponent<kiko::CollisionComponent>();
+
+	if (collisionComponent)  // null check
+	{
+		auto renderComponent = GetComponent<kiko::RenderComponent>();
+		if (renderComponent)
+		{
+			float scale = m_transform.scale;
+			collisionComponent->m_radius = renderComponent->GetRadius() * scale;
+		}
+	}
+
+	return true;
+}
+
 void Enemy::Update(float dt)
 {
 	Actor::Update(dt);

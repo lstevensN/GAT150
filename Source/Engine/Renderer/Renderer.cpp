@@ -92,6 +92,6 @@ namespace kiko
 		dest.w = (int)size.x;
 		dest.h = (int)size.y;
 
-		SDL_RenderCopyEx(m_renderer, texture->m_texture, &dest, &dest, RadiansToDegrees(mx.GetRotation()), NULL, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(m_renderer, texture->m_texture, NULL, &dest, RadiansToDegrees(mx.GetRotation()), NULL, SDL_FLIP_NONE);
 	}
 }

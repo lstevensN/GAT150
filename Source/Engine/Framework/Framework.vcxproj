@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Components\CircleCollisionComponent.cpp" />
     <ClCompile Include="Components\EnginePhysicsComponent.cpp" />
     <ClCompile Include="Components\ModelRenderComponent.cpp" />
     <ClCompile Include="Components\SpriteComponent.cpp" />
@@ -145,6 +146,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Components\CircleCollisionComponent.h" />
+    <ClInclude Include="Components\CollisionComponent.h" />
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\EnginePhysicsComponent.h" />
     <ClInclude Include="Components\ModelRenderComponent.h" />
