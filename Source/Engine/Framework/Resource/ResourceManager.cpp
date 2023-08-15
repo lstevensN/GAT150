@@ -2,5 +2,5 @@
 
 namespace kiko
 {
-	ResourceManager g_resources;
+	
 }

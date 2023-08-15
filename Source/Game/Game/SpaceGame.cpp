@@ -3,16 +3,16 @@
 bool SpaceGame::Initialize()
 {
 	// Create font / text objects 
-	m_scoreText = std::make_unique<kiko::Text>(kiko::g_resources.Get<kiko::Font>("data-latin.ttf", 24));
+	m_scoreText = std::make_unique<kiko::Text>(GET_RESOURCE(kiko::Font, "data-latin.ttf", 24));
 	m_scoreText->Create(kiko::g_renderer, "SCORE 0000", kiko::Color{ 1, 0, 1, 1 });
 
-	m_gameOverText = std::make_unique<kiko::Text>(kiko::g_resources.Get<kiko::Font>("data-latin.ttf", 24));
+	m_gameOverText = std::make_unique<kiko::Text>(GET_RESOURCE(kiko::Font, "data-latin.ttf", 24));
 	m_gameOverText->Create(kiko::g_renderer, "GAME OVER", kiko::Color{ 1, 1, 1, 1 });
 
-	m_titleText = std::make_unique<kiko::Text>(kiko::g_resources.Get<kiko::Font>("data-latin.ttf", 36));
+	m_titleText = std::make_unique<kiko::Text>(GET_RESOURCE(kiko::Font, "data-latin.ttf", 36));
 	m_titleText->Create(kiko::g_renderer, "SHIPPING FUEL", kiko::Color{ 1, 1, 1, 1 });
 
-	m_livesText = std::make_unique<kiko::Text>(kiko::g_resources.Get<kiko::Font>("data-unifon.ttf", 36));
+	m_livesText = std::make_unique<kiko::Text>(GET_RESOURCE(kiko::Font, "data-unifon.ttf", 36));
 	m_livesText->Create(kiko::g_renderer, "A ", kiko::Color{ 1, 1, 1, 1 });
 
 	// Load audio
@@ -66,7 +66,7 @@ void SpaceGame::Update(float dt)
 
 			// create components
 			auto renderComponent = std::make_unique<kiko::SpriteComponent>();
-			renderComponent->m_texture = kiko::g_resources.Get<kiko::Texture>("leaCheese-remastered.png", kiko::g_renderer);
+			renderComponent->m_texture = GET_RESOURCE(kiko::Texture, "leaCheese-remastered.png", kiko::g_renderer);
 			player->AddComponent(std::move(renderComponent));
 
 			auto physicsComponent = std::make_unique<kiko::EnginePhysicsComponent>();
@@ -98,7 +98,7 @@ void SpaceGame::Update(float dt)
 
 			// create components
 			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
-			component->m_texture = kiko::g_resources.Get<kiko::Texture>("leaCheese-remastered.png", kiko::g_renderer);
+			component->m_texture = GET_RESOURCE(kiko::Texture, "leaCheese-remastered.png", kiko::g_renderer);
 			enemy->AddComponent(std::move(component));
 
 			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
@@ -117,7 +117,7 @@ void SpaceGame::Update(float dt)
 			enemy->m_game = this;
 
 			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
-			component->m_texture = kiko::g_resources.Get<kiko::Texture>("leaCheese-remastered.png", kiko::g_renderer);
+			component->m_texture = GET_RESOURCE(kiko::Texture, "leaCheese-remastered.png", kiko::g_renderer);
 			enemy->AddComponent(std::move(component));
 
 			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();

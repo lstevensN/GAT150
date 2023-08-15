@@ -64,7 +64,7 @@ void Player::Update(float dt)
 			weapon->m_tag = "p_smallBullet";
 
 			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
-			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
+			component->m_texture = GET_RESOURCE(kiko::Texture, "rocket.png", kiko::g_renderer);
 			weapon->AddComponent(std::move(component));
 
 			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
@@ -79,7 +79,7 @@ void Player::Update(float dt)
 			weapon->m_tag = "p_smallBullet";
 
 			component = std::make_unique<kiko::SpriteComponent>();
-			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
+			component->m_texture = GET_RESOURCE(kiko::Texture, "rocket.png", kiko::g_renderer);
 			weapon->AddComponent(std::move(component));
 
 			collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
@@ -94,7 +94,7 @@ void Player::Update(float dt)
 			weapon->m_tag = "p_smallBullet";
 
 			component = std::make_unique<kiko::SpriteComponent>();
-			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
+			component->m_texture = GET_RESOURCE(kiko::Texture, "rocket.png", kiko::g_renderer);
 			weapon->AddComponent(std::move(component));
 
 			collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
@@ -113,7 +113,7 @@ void Player::Update(float dt)
 			weapon->m_tag = "p_Bullet";
 
 			auto component = std::make_unique<kiko::SpriteComponent>();
-			component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
+			component->m_texture = GET_RESOURCE(kiko::Texture, "rocket.png", kiko::g_renderer);
 			weapon->AddComponent(std::move(component));
 
 			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();

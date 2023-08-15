@@ -87,5 +87,11 @@
     <ClInclude Include="Components\CircleCollisionComponent.h">
       <Filter>Source\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

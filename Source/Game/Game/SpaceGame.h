@@ -4,6 +4,7 @@
 #include "Weapon.h"
 
 #include "Framework/Framework.h"
+#include "Framework/Singleton.h"
 #include "Renderer/Renderer.h"
 
 #include "Audio/AudioSystem.h"

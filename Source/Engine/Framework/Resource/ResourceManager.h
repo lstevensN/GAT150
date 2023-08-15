@@ -1,13 +1,13 @@
 #pragma once
 #include "Resource.h"
-
+#include "Framework/Singleton.h"
 #include <map>
 #include <memory>
 #include <string>
 
 namespace kiko
 {
-	class ResourceManager
+	class ResourceManager : public Singleton<ResourceManager>
 	{
 	public:
 		template<typename T, typename ... TArgs>
@@ -31,6 +31,4 @@ namespace kiko
 
 		return resource;
 	}
-
-	extern ResourceManager g_resources;
 }
