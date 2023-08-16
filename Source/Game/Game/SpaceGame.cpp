@@ -65,7 +65,7 @@ void SpaceGame::Update(float dt)
 			player->SetDamping(0.95f);
 
 			// create components
-			auto renderComponent = std::make_unique<kiko::SpriteComponent>();
+			auto renderComponent = CREATE_CLASS(SpriteComponent);
 			renderComponent->m_texture = GET_RESOURCE(kiko::Texture, "leaCheese-remastered.png", kiko::g_renderer);
 			player->AddComponent(std::move(renderComponent));
 
@@ -73,7 +73,7 @@ void SpaceGame::Update(float dt)
 			physicsComponent->m_damping = 0.9f;
 			player->AddComponent(std::move(physicsComponent));
 
-			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+			auto collisionComponent = CREATE_CLASS(CircleCollisionComponent);
 			collisionComponent->m_radius = 30.0f;
 			player->AddComponent(std::move(collisionComponent));
 

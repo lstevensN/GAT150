@@ -4,6 +4,8 @@
 
 namespace kiko
 {
+	CLASS_DEFINITION(SpriteComponent)
+
 	void SpriteComponent::Update(float dt)
 	{
 		
@@ -14,6 +16,3 @@ namespace kiko
 		renderer.DrawTexture(m_texture.get(), m_owner->m_transform);
 	}
 }
-
-// m_owner->m_transform.position.x
-// m_owner->m_transform.position.y

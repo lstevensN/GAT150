@@ -1,9 +1,12 @@
 #pragma once
 #include <memory>
-#include "Object.h"
+//#include "Object.h"
 #include "Singleton.h"
 #include <map>
 #include <string>
+#include "Core/Logger.h"
+
+#define CREATE_CLASS(classname) kiko::Factory::Instance().Create<kiko::classname>(#classname);
 
 namespace kiko
 {
@@ -12,14 +15,14 @@ namespace kiko
 	public:
 		virtual ~CreatorBase() = default;
 
-		virtual std::unique_ptr<kiko::Object> Create() = 0;
+		virtual std::unique_ptr<class Object> Create() = 0;
 	};
 
 	template <typename T>
 	class Creator : public CreatorBase
 	{
 	public:
-		std::unique_ptr<kiko::Object> Create() override
+		std::unique_ptr<class Object> Create() override
 		{
 			return std::make_unique<T>();
 		}
@@ -46,6 +49,8 @@ namespace kiko
 	template<typename T>
 	inline void Factory::Register(const std::string key)
 	{
+		INFO_LOG("Class registered " << key);
+
 		m_registry[key] = std::make_unique<Creator<T>>();
 	}
 

@@ -1,5 +1,4 @@
 #pragma once
-#include "Resource/ResourceManager.h"
 
 #define GET_RESOURCE(type, filename, ...) kiko::ResourceManager::Instance().Get<type>(filename, __VA_ARGS__)
 
