@@ -4,22 +4,29 @@
 #include "Enemy.h"
 #include "SpaceGame.h"
 
-class Weapon : public kiko::Actor
+namespace kiko
 {
-public:
-	Weapon() = default;
-	Weapon(float speed, const kiko::Transform& transform) :
-		Actor{ transform },
-		m_speed{ speed }
+	class Weapon : public Actor
 	{
-		m_lifespan = 1.5f;
-	}
+	public:
+		CLASS_DECLARATION(Weapon)
 
-	bool Initialize() override;
+		/*
+		Weapon() = default;
+		Weapon(float speed, const kiko::Transform& transform) :
+			Actor{ transform },
+			m_speed{ speed }
+		{
+			lifespan = 1.5f;
+		}
+		*/
 
-	void Update(float dt) override;
-	void OnCollision(Actor* other) override;
+		bool Initialize() override;
 
-private:
-	float m_speed = 0;
-};
+		void Update(float dt) override;
+		void OnCollision(Actor* other);
+
+	private:
+		float speed = 0;
+	};
+}

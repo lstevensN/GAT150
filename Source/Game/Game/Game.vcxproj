@@ -196,9 +196,15 @@
     <ProjectReference Include="..\..\Engine\Input\Input.vcxproj">
       <Project>{6b0e733f-2283-422a-9b05-67f1b86d3225}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Physics\Physics.vcxproj">
+      <Project>{3d21a497-ee86-4807-ab97-81a8a28e63a9}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\Renderer\Renderer.vcxproj">
       <Project>{32d52a8c-52b4-4a2c-8039-7af1e97e887c}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\Build\Assets\Scene.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

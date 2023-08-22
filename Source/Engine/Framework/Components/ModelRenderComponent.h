@@ -14,7 +14,10 @@ namespace kiko
 
 		virtual float GetRadius() override { return m_model->GetRadius(); }
 
+		bool Initialize() override;
+
 	public:
+		std::string modelName;
 		res_t<Model> m_model;
 	};
 }

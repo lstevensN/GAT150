@@ -1,0 +1,87 @@
+{
+	"actors": [
+		{
+			"type": "Actor",
+			"name": "Background",
+			"persistent": true,
+			"transform": {
+				"position": [ 400, 300 ],
+				"rotation": 0.0,
+				"scale": 1.25
+			},
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "space.jpg"
+				}
+			]
+		},
+		{
+			"type": "Weapon",
+			"name": "Rocket",
+			"prototype": true,
+			"tag": "Player",
+			"lifespan": 1.5,
+			"transform": {
+				"position": [ 400, 300 ],
+				"rotation": 0.0,
+				"scale": 1.0
+			},
+			"speed": 200,
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "rocket.png"
+				},
+				{
+					"type": "CircleCollisionComponent",
+					"m_radius": 5.0
+				}
+			]
+		},
+		{
+			"type": "Player",
+			"name": "Player",
+			"prototype": true,
+			"tag": "Player",
+			"transform": {
+				"position": [ 400, 300 ],
+				"rotation": 0.0,
+				"scale": 1.0
+			},
+			"m_speed": 15.0,
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "leaCheese-remastered.png"
+				},
+				{
+					"type": "EnginePhysicsComponent",
+					"m_damping": 0.9
+				},
+				{
+					"type": "CircleCollisionComponent",
+					"m_radius": 10.0
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "Title",
+			"persistent": true,
+			"transform": {
+				"position": [ 400, 300 ],
+				"rotation": 0.0,
+				"scale": 2.0
+			},
+			"components": [
+				{
+					"type": "TextRenderComponent",
+					"fontName": "data-latin.ttf",
+					"fontSize": 36,
+					"text": "SHIPPING FUEL"
+				}
+			]
+		}
+	]
+}

@@ -18,6 +18,7 @@
 #include "Components/ModelRenderComponent.h"
 #include "Components/RenderComponent.h"
 #include "Components/SpriteComponent.h"
+#include "Components/TextRenderComponent.h"
 
 #include "Resource/Resource.h"
 #include "Resource/ResourceManager.h"

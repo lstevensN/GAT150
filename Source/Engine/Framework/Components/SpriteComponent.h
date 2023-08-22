@@ -15,7 +15,10 @@ namespace kiko
 
 		virtual float GetRadius() { return m_texture->GetSize().Length() * 0.5f; }
 
+		bool Initialize() override;
+
 	public:
+		std::string textureName;
 		res_t<Texture> m_texture;
 	};
 }

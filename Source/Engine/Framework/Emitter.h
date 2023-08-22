@@ -35,7 +35,7 @@ namespace kiko
 		void Update(float dt);
 		void Draw(kiko::Renderer& renderer);
 
-		void SetLifespan(float lifespan) { m_lifespan = lifespan; }
+		void SetLifespan(float lifespan) { lifespan = lifespan; }
 
 	private:
 		void Emit();

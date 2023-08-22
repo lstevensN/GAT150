@@ -3,6 +3,7 @@
 #include "Renderer/Renderer.h"
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
+#include "Physics/PhysicsSystem.h"
 #include "Player.h"
 #include "Enemy.h"
 
@@ -50,38 +51,12 @@ int main(int argc, char* argv[])
 	kiko::seedRandom((unsigned int)time(nullptr));
 	kiko::setFilePath("assets");
 
-	rapidjson::Document document;
-	kiko::Json::Load("json.txt", document);
-
-	int i1;
-	kiko::Json::Read(document, "integer1", i1);
-	std::cout << i1 << std::endl;
-	
-	int i2;
-	kiko::Json::Read(document, "integer2", i2);
-	std::cout << i2 << std::endl;
-
-	std::string str;
-	kiko::Json::Read(document, "string", str);
-	std::cout << str << std::endl;
-
-	bool b;
-	kiko::Json::Read(document, "boolean", b);
-	std::cout << b << std::endl;
-
-	float f;
-	kiko::Json::Read(document, "float", f);
-	std::cout << f << std::endl;
-
-	kiko::vec2 v2;
-	kiko::Json::Read(document, "bemis", v2);
-	std::cout << v2 << std::endl;
-
 	kiko::g_renderer.Initialize();
 	kiko::g_renderer.CreateWindow("CSC196", 800, 600);
 
 	kiko::g_inputSystem.Initialize();
 	kiko::g_audioSystem.Initialize();
+	kiko::PhysicsSystem::Instance().Initialize();
 
 	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
 	game->Initialize();
@@ -95,7 +70,7 @@ int main(int argc, char* argv[])
 	v.Normalize();
 
 	std::vector<Star> stars;
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		vec2 pos(kiko::random(kiko::g_renderer.GetWidth()), kiko::random(kiko::g_renderer.GetHeight()));
 		vec2 vel(kiko::randomf(100, 200), 0.0f);
@@ -129,8 +104,8 @@ int main(int argc, char* argv[])
 		// draw game
 		kiko::g_renderer.SetColor(0, 0, 0, 0);
 		kiko::g_renderer.BeginFrame();
-
-		//text->Draw(kiko::g_renderer, 400, 300);
+		
+		game->Draw(kiko::g_renderer);
 
 		for (auto& star : stars)
 		{
@@ -140,7 +115,6 @@ int main(int argc, char* argv[])
 			star.Draw(kiko::g_renderer);
 		}
 
-		game->Draw(kiko::g_renderer);
 		//kiko::g_renderer.DrawTexture(texture.get(), 200.0f, 200.0f, 0.0f);
 
 		kiko::g_renderer.EndFrame();

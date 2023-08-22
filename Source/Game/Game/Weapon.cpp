@@ -1,39 +1,52 @@
 #include "Weapon.h"
 
-bool Weapon::Initialize()
+namespace kiko
 {
-	Actor::Initialize();
+	CLASS_DEFINITION(Weapon)
 
-	auto collisionComponent = GetComponent<kiko::CollisionComponent>();
-
-	if (collisionComponent)  // null check
+	bool Weapon::Initialize()
 	{
-		auto renderComponent = GetComponent<kiko::RenderComponent>();
-		if (renderComponent)
+		Actor::Initialize();
+
+		auto collisionComponent = GetComponent<kiko::CollisionComponent>();
+
+		if (collisionComponent)  // null check
 		{
-			float scale = m_transform.scale;
-			collisionComponent->m_radius = renderComponent->GetRadius() * scale;
+			auto renderComponent = GetComponent<kiko::RenderComponent>();
+			if (renderComponent)
+			{
+				float scale = transform.scale;
+				collisionComponent->m_radius = renderComponent->GetRadius() * scale;
+			}
 		}
+
+		return true;
 	}
 
-	return true;
-}
+	void Weapon::Update(float dt)
+	{
+		Actor::Update(dt);
 
-void Weapon::Update(float dt)
-{
-	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(m_transform.rotation);
-	m_transform.position += forward * m_speed * dt;
+		kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(transform.rotation);
+		transform.position += forward * speed * dt;
+	}
 
-	Actor::Update(dt);
-}
+	void Weapon::OnCollision(Actor* other)
+	{
+		if (tag == "p_bigBullet" && other->tag == "Enemy" ||
+			tag == "p_smallBullet" && other->tag == "Enemy" ||
+			tag == "p_Bullet" && other->tag == "fastEnemy" ||
+			tag == "p_smallBullet" && other->tag == "fastEnemy" ||
+			tag == "e_Bullet" && other->tag == "Player" ||
+			tag == "e_fastBullet" && other->tag == "Player" ||
+			other->tag == "power_up") destroyed = true;
+	}
 
-void Weapon::OnCollision(Actor* other)
-{
-	if (this->m_tag == "p_bigBullet" && other->m_tag == "Enemy" ||
-		this->m_tag == "p_smallBullet" && other->m_tag == "Enemy" ||
-		this->m_tag == "p_Bullet" && other->m_tag == "fastEnemy" ||
-		this->m_tag == "p_smallBullet" && other->m_tag == "fastEnemy" ||
-		this->m_tag == "e_Bullet" && other->m_tag == "Player" ||
-		this->m_tag == "e_fastBullet" && other->m_tag == "Player" ||
-		other->m_tag == "power_up") m_destroyed = true;
+	void Weapon::Read(const json_t& value)
+	{
+		Actor::Read(value);
+
+		READ_DATA(value, name);
+		READ_DATA(value, speed);
+	}
 }
