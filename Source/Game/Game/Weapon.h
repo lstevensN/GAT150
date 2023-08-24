@@ -11,22 +11,13 @@ namespace kiko
 	public:
 		CLASS_DECLARATION(Weapon)
 
-		/*
-		Weapon() = default;
-		Weapon(float speed, const kiko::Transform& transform) :
-			Actor{ transform },
-			m_speed{ speed }
-		{
-			lifespan = 1.5f;
-		}
-		*/
-
 		bool Initialize() override;
 
 		void Update(float dt) override;
-		void OnCollision(Actor* other);
+		void OnCollisionEnter(Actor* other);
 
 	private:
 		float speed = 0;
+		kiko::PhysicsComponent* m_physicsComponent = nullptr;
 	};
 }

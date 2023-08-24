@@ -8,16 +8,12 @@ namespace kiko
 	{
 		Actor::Initialize();
 
+		m_physicsComponent = GetComponent<kiko::PhysicsComponent>();
 		auto collisionComponent = GetComponent<kiko::CollisionComponent>();
 
 		if (collisionComponent)  // null check
 		{
-			auto renderComponent = GetComponent<kiko::RenderComponent>();
-			if (renderComponent)
-			{
-				float scale = transform.scale;
-				collisionComponent->m_radius = renderComponent->GetRadius() * scale;
-			}
+			
 		}
 
 		return true;
@@ -28,10 +24,12 @@ namespace kiko
 		Actor::Update(dt);
 
 		kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(transform.rotation);
+		m_physicsComponent->SetVelocity(forward * speed);
+
 		transform.position += forward * speed * dt;
 	}
 
-	void Weapon::OnCollision(Actor* other)
+	void Weapon::OnCollisionEnter(Actor* other)
 	{
 		if (tag == "p_bigBullet" && other->tag == "Enemy" ||
 			tag == "p_smallBullet" && other->tag == "Enemy" ||

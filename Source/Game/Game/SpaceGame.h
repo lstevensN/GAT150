@@ -5,13 +5,15 @@
 
 #include "Framework/Framework.h"
 #include "Framework/Singleton.h"
+#include "Framework/Event/EventManager.h"
+
 #include "Renderer/Renderer.h"
 
 #include "Audio/AudioSystem.h"
 #include "Input/InputSystem.h"
 
 
-class SpaceGame : public kiko::Game
+class SpaceGame : public kiko::Game, kiko::IEventListener
 {
 public:
 	enum class eState
@@ -39,8 +41,8 @@ public:
 
 	void SetState(eState state) { m_state = state; }
 
-	//void SetMarkedEnemy(Enemy* enemy) { m_markedEnemy = enemy; }
-	//Enemy* GetMarkedEnemy() const { return m_markedEnemy; }
+	void OnAddPoints(const kiko::Event& event);
+	void OnPlayerDead(const kiko::Event& event);
 
 private:
 	eState m_state = eState::Title;

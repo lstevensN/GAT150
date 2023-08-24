@@ -30,8 +30,8 @@ namespace kiko
 		template <typename T>
 		T* GetComponent();
 
-		inline float GetRadius() { return (m_model) ? m_model->GetRadius() * transform.scale : -10000; }
-		virtual void OnCollision(Actor* other) {}
+		virtual void OnCollisionEnter(Actor* other) {}
+		virtual void OnCollisionExit(Actor* other) {}
 
 		void AddForce(vec2 force) { m_velocity += force; }
 		void SetDamping(float damping) { m_damping = damping; }

@@ -1,5 +1,8 @@
 #include "SpaceGame.h"
 
+#define EVENT_SUBSCRIBE(id, function)	kiko::EventManager::Instance().Subscribe(id, this, std::bind(&function, this, std::placeholders::_1));
+#define EVENT_UNSUBSCRIBE(id)			kiko::EventManager::Instance().Unsubscribe(id, this);
+
 bool SpaceGame::Initialize()
 {
 	// Create the scene
@@ -29,6 +32,13 @@ bool SpaceGame::Initialize()
 	kiko::g_audioSystem.AddSound("power_up", "power_up.mp3");
 
 	//kiko::g_audioSystem.PlayOneShot("bgm", true);
+
+	// add events
+	EVENT_SUBSCRIBE("OnAddPoints", SpaceGame::OnAddPoints);
+	EVENT_SUBSCRIBE("OnPlayerDead", SpaceGame::OnPlayerDead);
+
+	//kiko::EventManager::Instance().Subscribe("AddPoints", this, std::bind(&SpaceGame::OnAddPoints, this, std::placeholders::_1));
+	//kiko::EventManager::Instance().Subscribe("OnPlayerDead", this, std::bind(&SpaceGame::OnPlayerDead, this, std::placeholders::_1));
 
 	return true;
 }
@@ -67,6 +77,7 @@ void SpaceGame::Update(float dt)
 			auto player = INSTANTIATE(Player, "Player");
 			player->Initialize();
 			player->m_game = this;
+			player->m_damping = 0.9f;
 			m_scene->Add(std::move(player));
 		}
 
@@ -80,22 +91,13 @@ void SpaceGame::Update(float dt)
 		m_fastSpawnTimer += dt;
 		if (m_spawnTimer >= m_spawnTime)
 		{
-			//m_spawnTimer = -3;
-			//std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(kiko::randomf(30, 125), kiko::Pi, kiko::Transform{ { 0, kiko::random(200, 600) }, kiko::randomf(kiko::TwoPi), kiko::randomf(0.5f, 2.0f)});
-			//enemy->tag = "Enemy";
-			//enemy->m_game = this;
+			m_spawnTimer = -3;
 
-			//// create components
-			//std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
-			//component->m_texture = GET_RESOURCE(kiko::Texture, "leaCheese-remastered.png", kiko::g_renderer);
-			//enemy->AddComponent(std::move(component));
-
-			//auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
-			//collisionComponent->m_radius = 10.0f;
-			//enemy->AddComponent(std::move(collisionComponent));
-
-			//enemy->Initialize();
-			//m_scene->Add(std::move(enemy));
+			auto enemy = INSTANTIATE(Enemy, "Enemy");
+			enemy->Initialize();
+			enemy->transform = { { 0, kiko::random(200, 600) }, kiko::randomf(kiko::TwoPi), kiko::randomf(2.5f, 4.0f) };
+			enemy->m_game = this;
+			m_scene->Add(std::move(enemy));
 		}
 
 		if (m_fastSpawnTimer >= m_spawnTime)
@@ -164,7 +166,7 @@ void SpaceGame::Update(float dt)
 
 void SpaceGame::Draw(kiko::Renderer& renderer)
 {
-	if (m_state == eState::Title) m_scene->GetActorByName<kiko::Actor>("Title")->active = true;
+	//if (m_state == eState::Title) m_scene->GetActorByName<kiko::Actor>("Title")->active = true;
 
 	if (m_state == eState::GameOver) m_gameOverText->Draw(renderer, 350, 300);
 
@@ -177,4 +179,15 @@ void SpaceGame::Draw(kiko::Renderer& renderer)
 	m_scene->Draw(renderer);
 
 	kiko::g_particleSystem.Draw(renderer);
+}
+
+void SpaceGame::OnAddPoints(const kiko::Event& event)
+{
+	m_score += std::get<int>(event.data);
+}
+
+void SpaceGame::OnPlayerDead(const kiko::Event& event)
+{
+	m_lives--;
+	m_state = eState::PlayerDeadStart;
 }

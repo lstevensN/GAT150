@@ -8,6 +8,7 @@ namespace kiko
 	{
 		Actor::Initialize();
 
+		m_physicsComponent = GetComponent<kiko::PhysicsComponent>();
 		auto collisionComponent = GetComponent<kiko::CollisionComponent>();
 
 		if (collisionComponent)  // null check
@@ -36,7 +37,8 @@ namespace kiko
 			// Turn towards player
 			float turnAngle = kiko::vec2::SignedAngle(forward, direction.Normalized());
 
-			transform.rotation += turnAngle * 5 * dt;
+			//transform.rotation += turnAngle * 5 * dt;
+			m_physicsComponent->ApplyTorque(turnAngle);
 
 			if (std::fabs(turnAngle) < kiko::DegreesToRadians(30.0))
 			{
@@ -50,7 +52,9 @@ namespace kiko
 		//	// I see you
 		//}
 
-		transform.position += forward * m_speed * dt;
+		m_physicsComponent->ApplyForce(forward * m_speed);
+
+		//transform.position += forward * m_speed * dt;
 		transform.position.x = kiko::Wrap(transform.position.x, (float)kiko::g_renderer.GetWidth());
 		transform.position.y = kiko::Wrap(transform.position.y, (float)kiko::g_renderer.GetHeight());
 
@@ -58,12 +62,18 @@ namespace kiko
 		{
 			if (tag == "Enemy")
 			{
+				auto weapon = INSTANTIATE(Weapon, "EnemyWeapon");
+				weapon->transform = { transform.position, transform.rotation, weapon->transform.scale };
+				weapon->Initialize();
+				weapon->m_game = this->m_game;
+				m_scene->Add(std::move(weapon));
+
 				/*kiko::Transform transform{ transform.position, transform.rotation, 1 };
 				std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(350.0f, transform);
 				weapon->tag = "e_Bullet";
-				m_scene->Add(std::move(weapon));
+				m_scene->Add(std::move(weapon));*/
 
-				kiko::g_audioSystem.PlayOneShot("weapon_strong", false);*/
+				kiko::g_audioSystem.PlayOneShot("weapon_strong", false);
 			}
 			else if (tag == "fastEnemy")
 			{
@@ -80,12 +90,14 @@ namespace kiko
 		else m_fireTimer -= dt;
 	}
 
-	void Enemy::OnCollision(Actor* other)
+	void Enemy::OnCollisionEnter(Actor* other)
 	{
 		if (this->tag == "Enemy")
 		{
 			if (other->tag == "p_Bullet" || other->tag == "Player" || other->tag == "p_smallBullet" && m_hitCount == 2)
 			{
+				kiko::EventManager::Instance().DispatchEvent("OnAddPoints", 125);
+				
 				destroyed = true;
 
 				kiko::EmitterData data;
@@ -107,7 +119,6 @@ namespace kiko
 				emitter->SetLifespan(1.0f);
 				m_scene->Add(std::move(emitter));
 
-				m_game->AddPoints(125);
 				kiko::g_audioSystem.PlayOneShot("strong_enemy_destroy", false);
 			}
 			else if (other->tag == "p_smallBullet")
@@ -174,5 +185,6 @@ namespace kiko
 		Actor::Read(value);
 
 		READ_DATA(value, name);
+		READ_DATA(value, m_speed);
 	}
 }

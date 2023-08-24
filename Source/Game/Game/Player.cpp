@@ -32,7 +32,8 @@ namespace kiko
 		float rotate = 0;
 		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_A)) rotate = -1;
 		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_D)) rotate = 1;
-		transform.rotation += rotate * m_turnRate * dt;
+		//transform.rotation += rotate * m_turnRate * dt;
+		m_physicsComponent->ApplyTorque(rotate * m_turnRate);
 
 		float thrust = 0;
 		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_W)) thrust = 1;
@@ -95,14 +96,15 @@ namespace kiko
 		else kiko::g_time.SetTimeScale(1.0f);
 	}
 
-	void Player::OnCollision(Actor* other)
+	void Player::OnCollisionEnter(Actor* other)
 	{
 		if (!m_shieldOn)
 		{
 			if (other->tag == "e_Bullet" || other->tag == "Enemy")
 			{
-				m_game->SetLives(m_game->GetLives() - 1);
-				dynamic_cast<SpaceGame*>(m_game)->SetState(SpaceGame::eState::PlayerDeadStart);
+				kiko::EventManager::Instance().DispatchEvent("OnPlayerDead", 0);
+				//m_game->SetLives(m_game->GetLives() - 1);
+				//dynamic_cast<SpaceGame*>(m_game)->SetState(SpaceGame::eState::PlayerDeadStart);
 				destroyed = true;
 
 				kiko::EmitterData data;
@@ -149,6 +151,6 @@ namespace kiko
 
 		READ_DATA(value, name);
 		READ_DATA(value, m_speed);
-		READ_DATA(value, m_damping);
+		READ_DATA(value, m_turnRate);
 	}
 }

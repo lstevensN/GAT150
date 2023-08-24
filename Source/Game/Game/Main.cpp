@@ -12,8 +12,10 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <array>
 #include <cassert>
 #include <map>
+#include <functional>
 
 
 using vec2 = kiko::Vector2;
@@ -61,8 +63,6 @@ int main(int argc, char* argv[])
 	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
 	game->Initialize();
 
-	// kiko::res_t<kiko::Texture> texture = kiko::g_resources.Get<kiko::Texture>("bagel.png", kiko::g_renderer);
-
 	std::vector<vec2> cursor{ {10, 10}, { -10, 10 }, { -10, -10 }, { 10, -10 }, { 10, 10 } };
 	kiko::Model cursorModel{cursor};
 
@@ -97,6 +97,7 @@ int main(int argc, char* argv[])
 		}
 
 		kiko::g_audioSystem.Update();
+		kiko::PhysicsSystem::Instance().Update(kiko::g_time.GetDeltaTime());
 
 		// update game
 		game->Update(kiko::g_time.GetDeltaTime());

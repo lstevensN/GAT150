@@ -27,15 +27,51 @@
 				"rotation": 0.0,
 				"scale": 1.0
 			},
-			"speed": 200,
+			"speed": 10.0,
 			"components": [
 				{
 					"type": "SpriteComponent",
 					"textureName": "rocket.png"
 				},
 				{
-					"type": "CircleCollisionComponent",
-					"m_radius": 5.0
+					"type": "Box2DPhysicsComponent",
+					"damping": 0,
+					"angularDamping": 2,
+					"gravityScale": 0
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"size": [ 32, 32 ]
+				}
+			]
+		},
+		{
+			"type": "Weapon",
+			"name": "EnemyWeapon",
+			"prototype": true,
+			"tag": "e_bullet",
+			"lifespan": 1.5,
+			"transform": {
+				"position": [ 400, 300 ],
+				"rotation": 0.0,
+				"scale": 0.5
+			},
+			"speed": 15.0,
+			"turnRate": 0.5,
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "enemy.png"
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"damping": 0,
+					"angularDamping": 2,
+					"gravityScale": 0
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"size": [ 32, 32 ]
 				}
 			]
 		},
@@ -49,19 +85,51 @@
 				"rotation": 0.0,
 				"scale": 1.0
 			},
-			"m_speed": 15.0,
+			"m_speed": 5.0,
+			"m_turnRate": 0.5,
 			"components": [
 				{
 					"type": "SpriteComponent",
 					"textureName": "leaCheese-remastered.png"
 				},
 				{
-					"type": "EnginePhysicsComponent",
-					"m_damping": 0.9
+					"type": "Box2DPhysicsComponent",
+					"damping": 0.9,
+					"angularDamping": 2,
+					"gravityScale": 0
 				},
 				{
-					"type": "CircleCollisionComponent",
-					"m_radius": 10.0
+					"type": "Box2DCollisionComponent",
+					"size": [32, 32]
+				}
+			]
+		},
+		{
+			"type": "Enemy",
+			"name": "Enemy",
+			"prototype": true,
+			"tag": "Enemy",
+			"transform": {
+				"position": [ 0, 0 ],
+				"rotation": 0.0,
+				"scale": 1.0
+			},
+			"m_speed": 5.0,
+			"m_turnRate": 0.5,
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "enemy.png"
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"damping": 0.9,
+					"angularDamping": 2,
+					"gravityScale": 0
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"size": [ 32, 32 ]
 				}
 			]
 		},

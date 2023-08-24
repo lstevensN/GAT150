@@ -20,7 +20,12 @@
 #include "Components/SpriteComponent.h"
 #include "Components/TextRenderComponent.h"
 
+#include "Components/Box2dCollisionComponent.h"
+#include "Components/Box2dPhysicsComponent.h"
+
 #include "Resource/Resource.h"
 #include "Resource/ResourceManager.h"
 
 #include "Factory.h"
+
+#include "Event/EventManager.h"

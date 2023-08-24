@@ -20,6 +20,6 @@ namespace kiko
 
     void CircleCollisionComponent::Read(const json_t& value)
     {
-        //
+        READ_DATA(value, m_radius);
     }
 }
