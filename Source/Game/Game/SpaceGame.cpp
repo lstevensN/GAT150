@@ -7,7 +7,7 @@ bool SpaceGame::Initialize()
 {
 	// Create the scene
 	m_scene = std::make_unique<kiko::Scene>();
-	m_scene->Load("Scene.json");
+	m_scene->Load("Scenes/SpaceScene.json");
 	m_scene->Initialize();
 
 	// Create font / text objects 
