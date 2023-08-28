@@ -20,13 +20,13 @@ using vec2 = kiko::Vector2;
 
 int main(int argc, char* argv[])
 {
-	kiko::Factory::Instance().Register<kiko::SpriteComponent>("SpriteRenderComponent");
+	//kiko::Factory::Instance().Register<kiko::SpriteComponent>("SpriteRenderComponent");
 
 	INFO_LOG("Initialze engine...");
 
 	kiko::MemoryTracker::Initialize();
 	kiko::seedRandom((unsigned int)time(nullptr));
-	kiko::setFilePath("assets");
+	kiko::setFilePath("assets/platform");
 
 	kiko::g_renderer.Initialize();
 	kiko::g_renderer.CreateWindow("CSC196", 800, 600);

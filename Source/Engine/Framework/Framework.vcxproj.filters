@@ -55,6 +55,9 @@
     <ClCompile Include="Components\Box2dCollisionComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Components\SpriteAnimRenderComponent.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -124,6 +127,9 @@
       <Filter>Source\Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\Box2dCollisionComponent.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\SpriteAnimRenderComponent.h">
       <Filter>Source\Components</Filter>
     </ClInclude>
   </ItemGroup>

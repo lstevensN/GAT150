@@ -36,7 +36,7 @@ namespace kiko
 		if (m_changed)
 		{
 			m_changed = false;
-			m_text->Create(renderer, text, { 1, 1, 1, 1 });
+			m_text->Create(renderer, text, color);
 		}
 
 		// draw text
@@ -58,5 +58,6 @@ namespace kiko
 		READ_DATA(value, text);
 		READ_DATA(value, fontName);
 		READ_DATA(value, fontSize);
+		READ_DATA(value, color);
 	}
 }

@@ -10,7 +10,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Build\Assets\Scenes\Scene.json">
+    <None Include="..\..\..\Build\Assets\Platform\Scenes\Scene.json">
       <Filter>Source\Resources</Filter>
     </None>
   </ItemGroup>

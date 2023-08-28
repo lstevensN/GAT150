@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Renderer/Renderer.h"
 
 namespace kiko
 {

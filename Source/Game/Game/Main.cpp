@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 
 	kiko::MemoryTracker::Initialize();
 	kiko::seedRandom((unsigned int)time(nullptr));
-	kiko::setFilePath("assets");
+	kiko::setFilePath("assets/space");
 
 	kiko::g_renderer.Initialize();
 	kiko::g_renderer.CreateWindow("CSC196", 800, 600);

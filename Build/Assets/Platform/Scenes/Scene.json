@@ -1,0 +1,67 @@
+{
+	"actors": [
+		{
+			"type": "Actor",
+			"name": "Background",
+			"persistent": true,
+			"transform": {
+				"position": [ 400, 300 ],
+				"rotation": 0.0,
+				"scale": 1.25
+			},
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "textures/sky_background.png",
+					"source": [ 40, 40, 500, 100 ]
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "Coin",
+			"persistent": true,
+			"transform": {
+				"position": [ 400, 400 ],
+				"rotation": 0.0,
+				"scale": 1.0
+			},
+			"components": [
+				{
+					"type": "SpriteAnimRenderComponent",
+					"defaultSequence": "idle",
+					"sequences": [
+						{
+							"name": "idle",
+							"fps": 12,
+							"numColumns": 8,
+							"numRows": 1,
+							"startFrame": 1,
+							"endFrame": 8,
+							"textureName": "textures/coin.png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "Title",
+			"persistent": true,
+			"transform": {
+				"position": [ 400, 300 ],
+				"rotation": 0.0,
+				"scale": 2.0
+			},
+			"components": [
+				{
+					"type": "TextRenderComponent",
+					"fontName": "data-latin.ttf",
+					"fontSize": 36,
+					"text": "PLATFORM GAME",
+					"color": [ 1, 0, 0, 1 ]
+				}
+			]
+		}
+	]
+}
