@@ -2,20 +2,19 @@
 
 #define EVENT_SUBSCRIBE(id, function)	kiko::EventManager::Instance().Subscribe(id, this, std::bind(&function, this, std::placeholders::_1));
 #define EVENT_UNSUBSCRIBE(id)			kiko::EventManager::Instance().Unsubscribe(id, this);
+#define EVENT_DISPATCH(id, value)       kiko::EventManager::Instance().DispatchEvent(id, value);
 
 bool PlatformGame::Initialize()
 {
 	// Create the scene
 	m_scene = std::make_unique<kiko::Scene>();
 	m_scene->Load("scenes/scene.json");
+	m_scene->Load("scenes/tilemap.json");
 	m_scene->Initialize();
 
 	// add events
 	EVENT_SUBSCRIBE("OnAddPoints", PlatformGame::OnAddPoints);
 	EVENT_SUBSCRIBE("OnPlayerDead", PlatformGame::OnPlayerDead);
-
-	//kiko::EventManager::Instance().Subscribe("AddPoints", this, std::bind(&PlatformGame::OnAddPoints, this, std::placeholders::_1));
-	//kiko::EventManager::Instance().Subscribe("OnPlayerDead", this, std::bind(&PlatformGame::OnPlayerDead, this, std::placeholders::_1));
 
 	return true;
 }
@@ -30,15 +29,15 @@ void PlatformGame::Update(float dt)
 	switch (m_state)
 	{
 	case eState::Title:
-		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE))
-		{
-			m_state = eState::StartGame;
-			auto actor = m_scene->GetActorByName<kiko::Actor>("Background");
-			if (actor) actor->active = false;
+		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_RETURN)) m_state = eState::StartGame;
 
-			actor = m_scene->GetActorByName<kiko::Actor>("Title");
-			if (actor) actor->active = false;
-		}
+	{
+		auto actor = INSTANTIATE(Actor, "Crate");
+		actor->transform.position = { kiko::random(kiko::g_renderer.GetWidth()), 100 };
+		actor->Initialize();
+		//m_scene->Add(std::move(actor));
+	}
+
 		break;
 
 	case eState::StartGame:
@@ -47,6 +46,8 @@ void PlatformGame::Update(float dt)
 
 	case eState::StartLevel:
 		m_scene->RemoveAll();
+		m_scene->Load("scenes/tilemap2.json");
+		m_scene->Initialize();
 
 		m_state = eState::Game;
 		break;

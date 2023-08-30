@@ -18,7 +18,9 @@
 #include "Components/ModelRenderComponent.h"
 #include "Components/RenderComponent.h"
 #include "Components/SpriteComponent.h"
+#include "Components/SpriteAnimRenderComponent.h"
 #include "Components/TextRenderComponent.h"
+#include "Components/TilemapComponent.h"
 
 #include "Components/Box2dCollisionComponent.h"
 #include "Components/Box2dPhysicsComponent.h"

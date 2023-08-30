@@ -13,13 +13,14 @@
 				{
 					"type": "SpriteComponent",
 					"textureName": "textures/sky_background.png",
-					"source": [ 40, 40, 500, 100 ]
+					"source": [ 0, 0, 800, 600 ]
 				}
 			]
 		},
 		{
 			"type": "Actor",
 			"name": "Coin",
+			"tag": "Object",
 			"persistent": true,
 			"transform": {
 				"position": [ 400, 400 ],
@@ -29,7 +30,7 @@
 			"components": [
 				{
 					"type": "SpriteAnimRenderComponent",
-					"defaultSequence": "idle",
+					"defaultSequenceName": "idle",
 					"sequences": [
 						{
 							"name": "idle",
@@ -41,6 +42,130 @@
 							"textureName": "textures/coin.png"
 						}
 					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"damping": 0,
+					"angularDamping": 2,
+					"gravityScale": 0.5,
+					"constrainAngle": true
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 0.6
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "Crate",
+			"tag": "Object",
+			"prototype": true,
+			"persistent": true,
+			"transform": {
+				"position": [ 300, 200 ],
+				"rotation": 0.0,
+				"scale": 1.0
+			},
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "textures/wooden_box.png",
+					"source": [ 0, 0, 48, 48 ]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"damping": 0,
+					"angularDamping": 2,
+					"gravityScale": 0.5,
+					"constrainAngle": true
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 0.3
+				}
+			]
+		},
+		{
+			"type": "Player",
+			"name": "Player",
+			"tag": "Player",
+			"persistent": true,
+			"transform": {
+				"position": [ 240, 300 ],
+				"rotation": 0.0,
+				"scale": 0.25
+			},
+			"m_speed": 3.0,
+			"jump": 5.0,
+			"components": [
+				{
+					"type": "SpriteAnimRenderComponent",
+					"defaultSequenceName": "idle",
+					"sequences": [
+						{
+							"name": "idle",
+							"fps": 12,
+							"numColumns": 1,
+							"numRows": 1,
+							"startFrame": 1,
+							"endFrame": 1,
+							"textureName": "textures/player_idle.png"
+						}
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"damping": 0.4,
+					"angularDamping": 2,
+					"gravityScale": 0.4,
+					"constrainAngle": true
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 0.0
+				}
+			]
+		},
+		{
+			"type": "Enemy",
+			"name": "Enemy",
+			"tag": "Enemy",
+			"persistent": true,
+			"transform": {
+				"position": [ 140, 300 ],
+				"rotation": 0.0,
+				"scale": 0.5
+			},
+			"m_speed": 1.0,
+			"jump": 5.0,
+			"components": [
+				{
+					"type": "SpriteAnimRenderComponent",
+					"defaultSequenceName": "idle",
+					"sequences": [
+						{
+							"name": "idle",
+							"fps": 12,
+							"numColumns": 4,
+							"numRows": 4,
+							"startFrame": 1,
+							"endFrame": 14,
+							"textureName": "textures/enemy_idle.png"
+						}
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"damping": 0,
+					"angularDamping": 2,
+					"gravityScale": 0,
+					"constrainAngle": true
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 0.1,
+					"isTrigger": false
 				}
 			]
 		},
