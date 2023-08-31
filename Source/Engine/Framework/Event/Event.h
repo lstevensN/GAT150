@@ -1,4 +1,5 @@
 #pragma once
+#include "Core/Math/Vector2.h"
 #include <variant>
 #include <string>
 
@@ -8,7 +9,7 @@ namespace kiko
 	{
 	public:
 		using id_t = std::string;
-		using data_t = std::variant<int, bool, float, std::string>;
+		using data_t = std::variant<int, bool, float, std::string, kiko::vec2>;
 
 	public:
 		Event() = default;

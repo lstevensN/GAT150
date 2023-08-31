@@ -9,12 +9,13 @@ bool PlatformGame::Initialize()
 	// Create the scene
 	m_scene = std::make_unique<kiko::Scene>();
 	m_scene->Load("scenes/scene.json");
-	m_scene->Load("scenes/tilemap.json");
+	m_scene->Load("scenes/tilemap2.json");
 	m_scene->Initialize();
 
 	// add events
 	EVENT_SUBSCRIBE("OnAddPoints", PlatformGame::OnAddPoints);
 	EVENT_SUBSCRIBE("OnPlayerDead", PlatformGame::OnPlayerDead);
+
 
 	return true;
 }
@@ -30,13 +31,17 @@ void PlatformGame::Update(float dt)
 	{
 	case eState::Title:
 		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_RETURN)) m_state = eState::StartGame;
+		if (kiko::g_inputSystem.GetMouseButtonDown(0))
+		{
+			EVENT_DISPATCH("MouseClicked", kiko::g_inputSystem.GetMousePosition());
+		}
 
-	{
-		auto actor = INSTANTIATE(Actor, "Crate");
-		actor->transform.position = { kiko::random(kiko::g_renderer.GetWidth()), 100 };
-		actor->Initialize();
-		//m_scene->Add(std::move(actor));
-	}
+	//{
+	//	auto actor = INSTANTIATE(Actor, "Crate");
+	//	actor->transform.position = { kiko::random(kiko::g_renderer.GetWidth()), 100 };
+	//	actor->Initialize();
+	//	//m_scene->Add(std::move(actor));
+	//}
 
 		break;
 
@@ -46,8 +51,6 @@ void PlatformGame::Update(float dt)
 
 	case eState::StartLevel:
 		m_scene->RemoveAll();
-		m_scene->Load("scenes/tilemap2.json");
-		m_scene->Initialize();
 
 		m_state = eState::Game;
 		break;

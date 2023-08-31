@@ -13,10 +13,14 @@ namespace kiko
 		void OnCollisionEnter(Actor* other) override;
 		void OnCollisionExit(Actor* other) override;
 
+		void Jump(const kiko::Event& event);
+
 	private:
-		float m_speed = 0;
+		float speed = 0;
+		float maxSpeed = 0;
 		float jump = 0;
 		int groundCount = 0;
+		bool inAir = false;
 
 		class PhysicsComponent* m_physicsComponent = nullptr;
 		class SpriteAnimRenderComponent* m_spriteAnimComponent = nullptr;

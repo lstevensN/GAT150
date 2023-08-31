@@ -52,7 +52,7 @@
 				},
 				{
 					"type": "Box2DCollisionComponent",
-					"restitution": 0.6
+					"restitution": 0.0
 				}
 			]
 		},
@@ -94,14 +94,17 @@
 			"transform": {
 				"position": [ 240, 300 ],
 				"rotation": 0.0,
-				"scale": 0.25
+				"scale": 0.1
 			},
-			"m_speed": 3.0,
+			"speed": 50.0,
+			"maxSpeed": 5.0,
 			"jump": 5.0,
 			"components": [
 				{
 					"type": "SpriteAnimRenderComponent",
 					"defaultSequenceName": "idle",
+					"source": [0, 0, 120, 120],
+					"origin": [ 0.5, 1 ],
 					"sequences": [
 						{
 							"name": "idle",
@@ -118,7 +121,7 @@
 					"type": "Box2DPhysicsComponent",
 					"damping": 0.4,
 					"angularDamping": 2,
-					"gravityScale": 0.4,
+					"gravityScale": 2,
 					"constrainAngle": true
 				},
 				{
@@ -138,7 +141,7 @@
 				"scale": 0.5
 			},
 			"m_speed": 1.0,
-			"jump": 5.0,
+			"jump": 1.25,
 			"components": [
 				{
 					"type": "SpriteAnimRenderComponent",

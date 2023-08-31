@@ -25,23 +25,16 @@ namespace kiko
 		{
 			kiko::vec2 direction = player->transform.position - transform.position;
 			m_physicsComponent->ApplyForce(direction.Normalized() * m_speed);
-
-			/*float direction = player->transform.position.x - transform.position.x;
-
-			float dir = (direction > 0) ? 2.0 : -2.0;
-
-			m_physicsComponent->ApplyForce(forward * m_speed * dir);
-
-			if (direction <= 200.0 || direction >= -200.0)
-			{
-				transform.position += forward * m_speed * dir * dt;
-			}*/
 		}
 	}
 
 	void Enemy::OnCollisionEnter(Actor* other)
 	{
-		
+		if (other->tag == "Player")
+		{
+			kiko::vec2 up = kiko::vec2{ 0, -1 };
+			m_physicsComponent->SetVelocity(m_physicsComponent->m_velocity + (up * jump));
+		}
 	}
 
 	void Enemy::Read(const json_t& value)

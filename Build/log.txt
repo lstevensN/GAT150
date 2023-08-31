@@ -14,7 +14,6 @@ INFO: Main.cpp(25) Initialze engine...
 INFO: Factory.h(79) Class registered Crate
 INFO: Factory.h(79) Class registered tile01
 INFO: Factory.h(79) Class registered tile02
+INFO: EventManager.cpp(18) Event subscribed: MouseClicked
 INFO: EventManager.cpp(18) Event subscribed: OnAddPoints
 INFO: EventManager.cpp(18) Event subscribed: OnPlayerDead
-INFO: Factory.h(79) Class registered tile01
-INFO: Factory.h(79) Class registered tile02

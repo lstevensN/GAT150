@@ -27,7 +27,7 @@ namespace kiko
 		void Update(float dt) override;
 		bool Initialize() override;
 
-		void SetSequence(const std::string& name);
+		void SetSequence(const std::string& name, bool update = true);
 		void UpdateSource();
 
 	public:
