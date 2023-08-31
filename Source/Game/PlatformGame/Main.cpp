@@ -15,7 +15,6 @@
 #include <map>
 #include <functional>
 
-
 using vec2 = kiko::Vector2;
 
 int main(int argc, char* argv[])

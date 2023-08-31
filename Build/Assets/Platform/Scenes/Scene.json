@@ -94,11 +94,11 @@
 			"transform": {
 				"position": [ 240, 300 ],
 				"rotation": 0.0,
-				"scale": 0.1
+				"scale": 0.2
 			},
-			"speed": 50.0,
-			"maxSpeed": 5.0,
-			"jump": 5.0,
+			"speed": 5.0,
+			"maxSpeed": 6.0,
+			"jump": 12.0,
 			"components": [
 				{
 					"type": "SpriteAnimRenderComponent",
@@ -140,8 +140,8 @@
 				"rotation": 0.0,
 				"scale": 0.5
 			},
-			"m_speed": 1.0,
-			"jump": 1.25,
+			"m_speed": 5.0,
+			"jump": 0.5,
 			"components": [
 				{
 					"type": "SpriteAnimRenderComponent",
@@ -160,14 +160,14 @@
 				},
 				{
 					"type": "Box2DPhysicsComponent",
-					"damping": 0,
+					"damping": 5,
 					"angularDamping": 2,
 					"gravityScale": 0,
 					"constrainAngle": true
 				},
 				{
 					"type": "Box2DCollisionComponent",
-					"restitution": 0.1,
+					"restitution": 0,
 					"isTrigger": false
 				}
 			]

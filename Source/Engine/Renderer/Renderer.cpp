@@ -117,7 +117,7 @@ namespace kiko
 		mat3 mx = transform.GetMatrix();
 
 		vec2 position = mx.GetTranslation();
-		vec2 size = vec2{ source.w, source.h } *mx.GetScale();
+		vec2 size = vec2{ source.w, source.h } * mx.GetScale();
 
 		SDL_Rect dest;
 		dest.x = (int)(position.x - (size.x * origin.x));

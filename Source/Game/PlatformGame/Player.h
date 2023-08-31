@@ -19,6 +19,8 @@ namespace kiko
 		float speed = 0;
 		float maxSpeed = 0;
 		float jump = 0;
+		float jumpTimer = 0.5f;
+		float jumpCooldown = 0;
 		int groundCount = 0;
 		bool inAir = false;
 

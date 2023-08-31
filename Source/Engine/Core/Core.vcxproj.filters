@@ -71,7 +71,7 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Math\Transform.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

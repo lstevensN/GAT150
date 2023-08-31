@@ -10,7 +10,7 @@ INFO: Factory.h(71) Class registered CircleCollisionComponent
 INFO: Factory.h(71) Class registered Box2DPhysicsComponent
 INFO: Factory.h(71) Class registered Box2DCollisionComponent
 INFO: Factory.h(71) Class registered Actor
-INFO: Main.cpp(25) Initialze engine...
+INFO: Main.cpp(24) Initialze engine...
 INFO: Factory.h(79) Class registered Crate
 INFO: Factory.h(79) Class registered tile01
 INFO: Factory.h(79) Class registered tile02

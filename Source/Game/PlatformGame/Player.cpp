@@ -28,33 +28,28 @@ namespace kiko
 		bool onGround = (groundCount > 0);
 		vec2 velocity = m_physicsComponent->m_velocity;
 
-		//kiko::g_inputSystem.GetMousePosition
-
-		// movement
-		float dir = 0;
-		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_LEFT)) dir = -1;
-		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_RIGHT)) dir = 1;
-
-		if (dir)
+		if (jumpCooldown)
 		{
-			velocity.x += speed * dir * ((onGround) ? 1 : 0.25f) * dt;
-			velocity.x = Clamp(velocity.x, -maxSpeed, maxSpeed);
-			m_physicsComponent->SetVelocity(velocity);
+			if (jumpCooldown < jumpTimer) jumpCooldown += dt;
+			else jumpCooldown = 0;
 		}
 
-		// jump
-		if (onGround && kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE) && !kiko::g_inputSystem.GetPreviousKey(SDL_SCANCODE_SPACE))
+		// check if position is off screen, if so wrap the position and set physics component to new position
+		if ((transform.position.x < 0 || transform.position.x >(float)kiko::g_renderer.GetWidth()) ||
+			(transform.position.y < 0 || transform.position.y >(float)kiko::g_renderer.GetHeight()))
 		{
-			kiko::vec2 up = kiko::vec2{ 0, -1 };
-			m_physicsComponent->SetVelocity(velocity + (up * jump));
+			transform.position.x = kiko::Wrap(transform.position.x, (float)kiko::g_renderer.GetWidth());
+			transform.position.y = kiko::Wrap(transform.position.y, (float)kiko::g_renderer.GetHeight());
+
+			m_physicsComponent->SetPosition(transform.position);
 		}
 
-		m_physicsComponent->SetGravityScale((velocity.y > 0) ? 7.0f : 2.0f);
+		m_physicsComponent->SetGravityScale((velocity.y > 0) ? 6.0f : 1.5f);
 
 		// check if moving
 		if (std::fabs(velocity.x > 0.2f))
 		{
-			if (dir != 0) m_spriteAnimComponent->flipH = (dir < -0.1f);
+			m_spriteAnimComponent->flipH = (velocity.x < -0.1f);
 			m_spriteAnimComponent->SetSequence("run");
 		}
 		else
@@ -67,8 +62,6 @@ namespace kiko
 			kiko::g_time.SetTimeScale(0.5f);
 		}
 		else kiko::g_time.SetTimeScale(1.0f);
-
-		//std::cout << groundCount << " " << onGround << std::endl;
 	}
 
 	void Player::OnCollisionEnter(Actor* other)
@@ -79,12 +72,15 @@ namespace kiko
 			// EVENT
 		}
 
-		if (other->tag == "Ground" || other->tag == "Object" || other->tag == "Enemy") groundCount++;
+		if (other->tag == "Ground" || other->tag == "Object" || other->tag == "Enemy")
+		{
+			groundCount++;
+		}
 	}
 
 	void Player::OnCollisionExit(Actor* other)
 	{
-		if (other->tag == "Ground" || other->tag == "Object" || other->tag == "Enemy")
+		if ((other->tag == "Ground" || other->tag == "Object" || other->tag == "Enemy"))
 		{
 			groundCount--;
 		}
@@ -92,11 +88,13 @@ namespace kiko
 
 	void Player::Jump(const kiko::Event& event)
 	{
-		if (groundCount && !inAir)
+		if (jumpCooldown == 0 && groundCount)
 		{
+			jumpCooldown += 0.1;
+
 			vec2 pos = std::get<vec2>(event.data);
 
-			float jumpDistance = pos.x - transform.position.x;
+			float jumpDistance = (pos.x - transform.position.x) * 0.035;
 
 			vec2 velocity = m_physicsComponent->m_velocity;
 
@@ -110,7 +108,7 @@ namespace kiko
 			std::cout << "Current Position: " << transform.position << std::endl;
 			std::cout << "Mouse Position: " << pos << std::endl;
 			std::cout << "Jump Distance: " << jumpDistance << std::endl;
-			std::cout << "Applied Velocity: " << m_physicsComponent->m_velocity << "\n" << std::endl;
+			std::cout << "Applied Velocity: " << (velocity + (up * jump)) << "\n" << std::endl;
 		}
 	}
 
