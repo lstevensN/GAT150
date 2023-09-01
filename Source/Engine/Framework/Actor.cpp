@@ -41,10 +41,14 @@ namespace kiko
 
 	void Actor::Update(float dt)
 	{
-		if (lifespan != -10.0f)
+		if (destroyed)
 		{
-			lifespan -= dt;
-			if (lifespan < 0) destroyed = true;
+			/*for (auto& component : components)
+			{
+				component->OnDestroy();
+			}*/
+
+			return;
 		}
 
 		for (auto& component : components)

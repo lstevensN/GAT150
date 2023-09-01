@@ -37,6 +37,7 @@ public:
 
 	void OnAddPoints(const kiko::Event& event);
 	void OnPlayerDead(const kiko::Event& event);
+	void OnEnemyDead(const kiko::Event& event);
 
 private:
 	eState m_state = eState::Title;

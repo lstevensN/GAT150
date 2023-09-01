@@ -20,10 +20,11 @@
 		{
 			"type": "Actor",
 			"name": "Coin",
-			"tag": "Object",
+			"tag": "Coin",
+			"prototype": true,
 			"persistent": true,
 			"transform": {
-				"position": [ 400, 400 ],
+				"position": [ 721, 131 ],
 				"rotation": 0.0,
 				"scale": 1.0
 			},
@@ -87,12 +88,68 @@
 			]
 		},
 		{
+			"type": "Actor",
+			"name": "Cursor",
+			"tag": "Cursor",
+			"persistent": true,
+			"transform": {
+				"position": [ 400, 300 ],
+				"rotation": 0.0,
+				"scale": 1.0
+			},
+			"components": [
+				{
+					"type": "SpriteAnimRenderComponent",
+					"defaultSequenceName": "cursor",
+					"source": [ 0, 0, 32, 32 ],
+					"origin": [ 0.5, 0.5 ],
+					"sequences": [
+						{
+							"name": "cursor",
+							"fps": 1,
+							"numColumns": 1,
+							"numRows": 1,
+							"startFrame": 1,
+							"endFrame": 1,
+							"textureName": "textures/cursor.png"
+						},
+						{
+							"name": "clicked",
+							"fps": 1,
+							"numColumns": 1,
+							"numRows": 1,
+							"startFrame": 1,
+							"endFrame": 1,
+							"textureName": "textures/cursor_clicked.png"
+						},
+						{
+							"name": "right_clicked",
+							"fps": 1,
+							"numColumns": 1,
+							"numRows": 1,
+							"startFrame": 1,
+							"endFrame": 1,
+							"textureName": "textures/cursor_right_clicked.png"
+						}
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"gravityScale": 0.0
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"isTrigger": true
+				}
+			]
+		},
+		{
 			"type": "Player",
 			"name": "Player",
 			"tag": "Player",
 			"persistent": true,
 			"transform": {
-				"position": [ 240, 300 ],
+				"position": [ 400, 500 ],
 				"rotation": 0.0,
 				"scale": 0.2
 			},
@@ -103,7 +160,7 @@
 				{
 					"type": "SpriteAnimRenderComponent",
 					"defaultSequenceName": "idle",
-					"source": [0, 0, 120, 120],
+					"source": [ 0, 0, 120, 120 ],
 					"origin": [ 0.5, 1 ],
 					"sequences": [
 						{
@@ -134,9 +191,10 @@
 			"type": "Enemy",
 			"name": "Enemy",
 			"tag": "Enemy",
+			"prototype": true,
 			"persistent": true,
 			"transform": {
-				"position": [ 140, 300 ],
+				"position": [ 400, -300 ],
 				"rotation": 0.0,
 				"scale": 0.5
 			},
@@ -155,6 +213,15 @@
 							"startFrame": 1,
 							"endFrame": 14,
 							"textureName": "textures/enemy_idle.png"
+						},
+						{
+							"name": "stunned",
+							"fps": 12,
+							"numColumns": 4,
+							"numRows": 4,
+							"startFrame": 1,
+							"endFrame": 14,
+							"textureName": "textures/enemy_stunned.png"
 						}
 					]
 				},
@@ -169,25 +236,6 @@
 					"type": "Box2DCollisionComponent",
 					"restitution": 0,
 					"isTrigger": false
-				}
-			]
-		},
-		{
-			"type": "Actor",
-			"name": "Title",
-			"persistent": true,
-			"transform": {
-				"position": [ 400, 300 ],
-				"rotation": 0.0,
-				"scale": 2.0
-			},
-			"components": [
-				{
-					"type": "TextRenderComponent",
-					"fontName": "data-latin.ttf",
-					"fontSize": 36,
-					"text": "PLATFORM GAME",
-					"color": [ 1, 0, 0, 1 ]
 				}
 			]
 		}

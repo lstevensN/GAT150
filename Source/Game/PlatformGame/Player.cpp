@@ -35,11 +35,9 @@ namespace kiko
 		}
 
 		// check if position is off screen, if so wrap the position and set physics component to new position
-		if ((transform.position.x < 0 || transform.position.x >(float)kiko::g_renderer.GetWidth()) ||
-			(transform.position.y < 0 || transform.position.y >(float)kiko::g_renderer.GetHeight()))
+		if (transform.position.x < 0 || transform.position.x >(float)kiko::g_renderer.GetWidth())
 		{
 			transform.position.x = kiko::Wrap(transform.position.x, (float)kiko::g_renderer.GetWidth());
-			transform.position.y = kiko::Wrap(transform.position.y, (float)kiko::g_renderer.GetHeight());
 
 			m_physicsComponent->SetPosition(transform.position);
 		}
@@ -66,10 +64,10 @@ namespace kiko
 
 	void Player::OnCollisionEnter(Actor* other)
 	{
-		if (other->tag == "Enemy")
+		if (other->tag == "Coin")
 		{
-			//destroyed = true;
-			// EVENT
+			other->destroyed = true;
+			kiko::g_audioSystem.PlayOneShot("coin_collect", false);
 		}
 
 		if (other->tag == "Ground" || other->tag == "Object" || other->tag == "Enemy")
@@ -90,24 +88,31 @@ namespace kiko
 	{
 		if (jumpCooldown == 0 && groundCount)
 		{
-			jumpCooldown += 0.1;
+			jumpCooldown += 0.1f;
 
 			vec2 pos = std::get<vec2>(event.data);
 
-			float jumpDistance = (pos.x - transform.position.x) * 0.035;
+			kiko::vec2 up = kiko::vec2{ 0, -1 };
+			
+			vec2 jumpDistance = { (pos.x - transform.position.x) * 0.035f, (pos.y - transform.position.y) * 0.1f };
 
 			vec2 velocity = m_physicsComponent->m_velocity;
 
-			kiko::vec2 up = kiko::vec2{ 0, -1 };
+			velocity.x = Clamp(jumpDistance.x, -maxSpeed, maxSpeed);
+			velocity.y = Clamp(jumpDistance.y, -jump, jump);
 
-			velocity.x = Clamp(jumpDistance, -maxSpeed, maxSpeed);
+			if (velocity.y > 0) velocity.y = -velocity.y;
+			if (transform.position.x < 50 || transform.position.x > 750) velocity.x = -velocity.x;
 
-			m_physicsComponent->SetVelocity(velocity + (up * jump));
+			m_physicsComponent->SetVelocity(velocity);
+
+			kiko::g_audioSystem.PlayOneShot("jump", false);
 
 			std::cout << "Jump called" << std::endl;
 			std::cout << "Current Position: " << transform.position << std::endl;
 			std::cout << "Mouse Position: " << pos << std::endl;
-			std::cout << "Jump Distance: " << jumpDistance << std::endl;
+			std::cout << "Jump Distance: " << jumpDistance.x << std::endl;
+			std::cout << "Jump Height: " << jumpDistance.y << std::endl;
 			std::cout << "Applied Velocity: " << (velocity + (up * jump)) << "\n" << std::endl;
 		}
 	}

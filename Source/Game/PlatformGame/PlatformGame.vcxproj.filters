@@ -19,6 +19,9 @@
     <None Include="..\..\..\Build\Assets\Platform\Scenes\tilemap2.json">
       <Filter>Source\Resources</Filter>
     </None>
+    <None Include="..\..\..\Build\Assets\Platform\Scenes\title.json">
+      <Filter>Source\Resources</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

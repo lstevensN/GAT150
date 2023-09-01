@@ -158,6 +158,7 @@
     <None Include="..\..\..\Build\Assets\Platform\Scenes\Scene.json" />
     <None Include="..\..\..\Build\Assets\Platform\Scenes\tilemap.json" />
     <None Include="..\..\..\Build\Assets\Platform\Scenes\tilemap2.json" />
+    <None Include="..\..\..\Build\Assets\Platform\Scenes\title.json" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
